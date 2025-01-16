@@ -13,11 +13,13 @@ workflows:
         - push
         - pull_request
     scripts:
-      - name: Install Unity
+      - name: Install Unity and Unity Hub
         script: |
+          # Install Unity Hub (necessary step before installing Unity)
           brew install --cask unity-hub
-          unityhub install-path --set /Applications/Unity/Hub/Editor/
-          unityhub install 2022.3.0f1 --module iOS # Replace with your Unity version
+          
+          # Install specific Unity version
+          /Applications/Unity/Hub.app/Contents/MacOS/UnityHub --headless install --version 2022.3.0f1 --module iOS
 
       - name: Build Unity project for iOS
         script: |
@@ -47,3 +49,4 @@ workflows:
 
     artifacts:
       - $CM_BUILD_DIR/Export/*.ipa
+
