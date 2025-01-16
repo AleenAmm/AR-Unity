@@ -15,18 +15,19 @@ workflows:
     scripts:
       - name: Install Unity and Unity Hub
         script: |
-          # Install Unity Hub if it's not already installed
+          # Check if Unity Hub is installed
           if ! command -v unityhub &> /dev/null
           then
             echo "Unity Hub not found. Installing Unity Hub..."
             brew install --cask unity-hub
           else
-            echo "Unity Hub already installed."
+            echo "Unity Hub is already installed."
           fi
 
-          # Ensure Unity version is installed using Unity Hub
+          # Check if Unity 2022.3.0f1 is installed
           if [ ! -d "/Applications/Unity/Hub/Editor/2022.3.0f1" ]; then
             echo "Installing Unity 2022.3.0f1..."
+            # Install Unity 2022.3.0f1 if not present
             /Applications/Unity/Hub.app/Contents/MacOS/UnityHub --headless install --version 2022.3.0f1 --module iOS
           else
             echo "Unity 2022.3.0f1 is already installed."
@@ -60,5 +61,3 @@ workflows:
 
     artifacts:
       - $CM_BUILD_DIR/Export/*.ipa
-
-
