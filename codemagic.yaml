@@ -1,37 +1,30 @@
 workflows:
-unity-ios:
-  name: Unity iOS Build
-  max_build_duration: 120
-  instance_type: mac_mini_m1
-  environment:
-    groups:
-      - apple_credentials  # Store Apple Developer credentials in Codemagic
-  triggering:
-    events:
-      - push
-  scripts:
-    - name: Install Unity Hub
-      script: |
-        brew tap homebrew/cask
-        brew install --cask unity-hub
-
-    - name: Install Unity Editor
-      script: |
-        # Download Unity.pkg using the direct link from the Unity Archive
-        curl -o Unity.pkg "https://download.unity3d.com/download_unity/b2e806cf271c/MacEditorTargetInstaller/UnitySetup-iOS-Support-for-Editor-6000.0.32f1.pkg"  # Replace with actual Unity version download URL
-        sudo installer -pkg Unity.pkg -target /
-
-    - name: Build Unity project
-      script: |
-        /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
-        -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
-        -projectPath . -logFile
-
-    - name: Build Xcode project
-      script: |
-        cd Unity-iOS-Export
-        xcodebuild -workspace YourGame.xcworkspace \
-        -scheme YourGame \
-        -sdk iphoneos \
-        -configuration Release \
-        archive -archivePath $HOME/build/YourGame.xcarchive
+  unity-ios:
+    name: Unity iOS Build
+    max_build_duration: 120
+    instance_type: mac_mini_m1
+    environment:
+      groups:
+        - apple_credentials  # Store Apple Developer credentials in Codemagic
+    triggering:
+      events:
+        - push
+    scripts:
+      - name: Install Unity
+        script: |
+          brew tap homebrew/cask
+          brew install --cask unity-hub
+          brew install --cask unity@6000.0.32f1  
+      - name: Build Unity project
+        script: |
+          /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
+          -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
+          -projectPath . -logFile
+      - name: Build Xcode project
+        script: |
+          cd Unity-iOS-Export
+          xcodebuild -workspace YourGame.xcworkspace \
+          -scheme YourGame \
+          -sdk iphoneos \
+          -configuration Release \
+          archive -archivePath $HOME/build/YourGame.xcarchive
