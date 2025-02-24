@@ -16,6 +16,9 @@ workflows:
           brew install --cask unity-hub
           # Manually download and install Unity 6000.0.32f1
           # Ensure the path is correct in the next step
+      - name: Verify Unity Installation
+        script: |
+          ls /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity
       - name: Build Unity project
         script: |
           /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
