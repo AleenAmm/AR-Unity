@@ -1,63 +1,30 @@
 workflows:
-  unity_ios:
-    name: Unity ARKit App for iOS
+  unity-ios:
+    name: Unity iOS Build
+    max_build_duration: 120
+    instance_type: mac_mini_m1
     environment:
-      vars:
-        UNITY_PROJECT_PATH: "."  # Root folder of your Unity project
-        OUTPUT_PATH: "$CM_BUILD_DIR/Build"
-        UNITY_EXECUTABLE_PATH: "C:/Program Files/Unity/Hub/Editor/6000.0.32f1/Editor/Unity"
-        UNITY_LICENSE: $UNITY_ACTIVATION_FILES
-      xcode: latest
+      groups:
+        - apple_credentials  # Store Apple Developer credentials in Codemagic
     triggering:
       events:
         - push
-        - pull_request
     scripts:
-      - name: Install Unity and Unity Hub
+      - name: Install Unity
         script: |
-          # Check if Unity Hub is installed
-          if ! command -v unityhub &> /dev/null
-          then
-            echo "Unity Hub not found. Installing Unity Hub..."
-            brew install --cask unity-hub
-          else
-            echo "Unity Hub is already installed."
-          fi
-
-          # Check if Unity 2022.3.0f1 is installed
-          if [ ! -d "/Applications/Unity/Hub/Editor/2022.3.0f1" ]; then
-            echo "Installing Unity 2022.3.0f1..."
-            # Install Unity 2022.3.0f1 if not present
-            /Applications/Unity/Hub.app/Contents/MacOS/UnityHub --headless install --version 2022.3.0f1 --module iOS
-          else
-            echo "Unity 2022.3.0f1 is already installed."
-          fi
-
-      - name: Build Unity project for iOS
+          brew tap homebrew/cask
+          brew install --cask unity-hub
+          brew install --cask unity@6000.0.32f1  # Change to your Unity version
+      - name: Build Unity project
         script: |
-          $UNITY_EXECUTABLE_PATH \
-          -batchmode \
-          -nographics \
-          -quit \
-          -projectPath $UNITY_PROJECT_PATH \
-          -buildTarget iOS \
-          -executeMethod BuildScript.PerformBuild \
-          -customBuildPath $OUTPUT_PATH
-
-      - name: Build and export iOS app
+          /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
+          -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
+          -projectPath . -logFile
+      - name: Build Xcode project
         script: |
-          cd $OUTPUT_PATH
-          xcodebuild clean archive \
-          -archivePath $CM_BUILD_DIR/Build.xcarchive \
-          -scheme Unity-iPhone \
+          cd Unity-iOS-Export
+          xcodebuild -workspace YourGame.xcworkspace \
+          -scheme YourGame \
           -sdk iphoneos \
-          CODE_SIGN_IDENTITY="$CM_CODE_SIGN_IDENTITY" \
-          PROVISIONING_PROFILE_SPECIFIER="$CM_PROVISIONING_PROFILE"
-          
-          xcodebuild -exportArchive \
-          -archivePath $CM_BUILD_DIR/Build.xcarchive \
-          -exportPath $CM_BUILD_DIR/Export \
-          -exportOptionsPlist exportOptions.plist
-
-    artifacts:
-      - $CM_BUILD_DIR/Export/*.ipa
+          -configuration Release \
+          archive -archivePath $HOME/build/YourGame.xcarchive
