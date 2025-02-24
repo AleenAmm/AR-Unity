@@ -10,12 +10,16 @@ workflows:
       events:
         - push
     scripts:
-      - name: Install Unity
+      - name: Install Unity Hub
         script: |
           brew tap homebrew/cask
           brew install --cask unity-hub
-          # Manually download and install Unity 6000.0.32f1
-          # Ensure the path is correct in the next step
+      - name: Download Unity Installer
+        script: |
+          curl -L -o Unity-6000.0.32f1.pkg "https://your-download-link/Unity-6000.0.32f1.pkg"
+      - name: Install Unity
+        script: |
+          sudo installer -pkg Unity-6000.0.32f1.pkg -target /
       - name: Verify Unity Installation
         script: |
           ls /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity
