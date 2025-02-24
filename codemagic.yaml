@@ -14,7 +14,8 @@ workflows:
         script: |
           brew tap homebrew/cask
           brew install --cask unity-hub
-          brew install --cask unity@6000.0.32f1  
+          # Manually download and install Unity 6000.0.32f1
+          # Ensure the path is correct in the next step
       - name: Build Unity project
         script: |
           /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
