@@ -21,24 +21,14 @@ workflows:
 
       - name: Download Unity Installer
         script: |
-          FILE_ID="1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2"
-          FILE_NAME="Unity-6000.0.32f1.pkg"
-          COOKIE_FILE="cookie.txt"
+          gdown "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2" -O Unity-6000.0.32f1.pkg
 
-          # Get the confirmation token
-          CONFIRM=$(curl -s -c $COOKIE_FILE "https://drive.google.com/uc?export=download&id=${FILE_ID}" | grep -o 'confirm=[^&]*' | cut -d '=' -f 2)
-
-          # Download the file
-          curl -L -b $COOKIE_FILE "https://drive.google.com/uc?export=download&id=${FILE_ID}&confirm=${CONFIRM}" -o ${FILE_NAME}
-
-          # Clean up
-          rm -f $COOKIE_FILE
-
-          # Verify the downloaded file
-          if [ -f ${FILE_NAME} ]; then
+      - name: Verify Unity Installer Download
+        script: |
+          if [ -f Unity-6000.0.32f1.pkg ]; then
             echo "Unity installer downloaded successfully."
-            ls -lh ${FILE_NAME}  # Check file size
-            file ${FILE_NAME}  # Check file type
+            ls -lh Unity-6000.0.32f1.pkg  # Check file size
+            file Unity-6000.0.32f1.pkg  # Check file type
           else
             echo "Failed to download Unity installer."
             exit 1
@@ -46,24 +36,10 @@ workflows:
 
       - name: Install Unity
         script: |
-          if [ -f Unity-6000.0.32f1.pkg ]; then
-            echo "Installing Unity..."
-            sudo installer -pkg ./Unity-6000.0.32f1.pkg -target / -verbose
-            if [ $? -eq 0 ]; then
-              echo "Unity installed successfully."
-            else
-              echo "Unity installation failed. Check installer logs for details."
-              cat /var/log/install.log | grep Unity
-              exit 1
-            fi
-          else
-            echo "Unity installer package not found."
-            exit 1
-          fi
+          sudo installer -pkg Unity-6000.0.32f1.pkg -target / -verbose
 
       - name: Check Installer Logs
         script: |
-          echo "Checking installer logs..."
           cat /var/log/install.log | grep Unity
 
       - name: Verify Unity Installation
@@ -83,15 +59,6 @@ workflows:
           else
             echo "Unity license activation failed. Check license_activation.log for details."
             exit 1
-          fi
-
-      - name: Print License Activation Log
-        script: |
-          if [ -f license_activation.log ]; then
-            echo "License activation log:"
-            cat license_activation.log
-          else
-            echo "License activation log file not found."
           fi
 
       - name: Build Unity project
@@ -114,20 +81,3 @@ workflows:
           mkdir -p $HOME/build  # Ensure the archive directory exists
           echo "Building Xcode project..."
           xcodebuild -project Unity-iPhone.xcodeproj \
-          -scheme Unity-iPhone \
-          -sdk iphoneos \
-          -configuration Release \
-          archive -archivePath $HOME/build/YourGame.xcarchive | tee xcodebuild.log
-          if [ $? -eq 0 ]; then
-            echo "Xcode build succeeded."
-          else
-            echo "Xcode build failed. Check xcodebuild.log for details."
-            exit 1
-          fi
-
-      - name: Export .ipa File
-        script: |
-          xcodebuild -exportArchive \
-          -archivePath $HOME/build/YourGame.xcarchive \
-          -exportPath $HOME/build \
-          -exportOptionsPlist ExportOptions.plist
