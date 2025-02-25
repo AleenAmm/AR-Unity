@@ -1,7 +1,7 @@
 workflows:
   unity-ios:
     name: Unity iOS Build
-    max_build_duration: 120  # Increased build duration
+    max_build_duration: 120
     instance_type: mac_mini_m1
     environment:
       groups:
@@ -23,22 +23,15 @@ workflows:
         script: |
           FILE_ID="1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2"
           FILE_NAME="Unity-6000.0.32f1.pkg"
-          COOKIE_FILE="cookie.txt"
 
-          # Get the confirmation token
-          CONFIRM=$(curl -s -c $COOKIE_FILE "https://drive.google.com/uc?export=download&id=${FILE_ID}" | grep -o 'confirm=[^&]*' | cut -d '=' -f 2)
-
-          # Download the file
-          curl -L -b $COOKIE_FILE "https://drive.google.com/uc?export=download&id=${FILE_ID}&confirm=${CONFIRM}" -o ${FILE_NAME}
-
-          # Clean up
-          rm -f $COOKIE_FILE
+          # Download using gdown
+          gdown --id $FILE_ID -O $FILE_NAME
 
           # Verify the downloaded file
-          if [ -f ${FILE_NAME} ]; then
+          if [ -f $FILE_NAME ]; then
             echo "Unity installer downloaded successfully."
-            ls -lh ${FILE_NAME}  # Check file size
-            file ${FILE_NAME}  # Check file type
+            ls -lh $FILE_NAME  # Check file size
+            file $FILE_NAME  # Check file type
           else
             echo "Failed to download Unity installer."
             exit 1
@@ -46,25 +39,23 @@ workflows:
 
       - name: Install Unity
         script: |
-          if [ -f Unity-6000.0.32f1.pkg ]; then
+          FILE_NAME="Unity-6000.0.32f1.pkg"
+
+          if [ -f $FILE_NAME ]; then
             echo "Installing Unity..."
-            sudo installer -pkg ./Unity-6000.0.32f1.pkg -target / -verbose
+            chmod +x $FILE_NAME  # Ensure it has execution permission
+            sudo installer -pkg $FILE_NAME -target / -verbose
             if [ $? -eq 0 ]; then
               echo "Unity installed successfully."
             else
               echo "Unity installation failed. Check installer logs for details."
-              cat /var/log/install.log | grep Unity
+              tail -n 50 /var/log/install.log | grep Unity
               exit 1
             fi
           else
             echo "Unity installer package not found."
             exit 1
           fi
-
-      - name: Check Installer Logs
-        script: |
-          echo "Checking installer logs..."
-          cat /var/log/install.log | grep Unity
 
       - name: Verify Unity Installation
         script: |
