@@ -14,21 +14,25 @@ workflows:
         script: |
           brew tap homebrew/cask
           brew install --cask unity-hub
+      - name: Install gdown
+        script: |
+          pip install gdown
       - name: Download Unity Installer
         script: |
-          curl -L -o Unity-6000.0.32f1.pkg "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2"
+          gdown "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2" -O Unity-6000.0.32f1.pkg
       - name: Verify Unity Installer Download
         script: |
           if [ -f Unity-6000.0.32f1.pkg ]; then
             echo "Unity installer downloaded successfully."
             ls -lh Unity-6000.0.32f1.pkg  # Check file size
+            file Unity-6000.0.32f1.pkg  # Check file type
           else
             echo "Failed to download Unity installer."
             exit 1
           fi
       - name: Install Unity
         script: |
-          sudo installer -pkg Unity-6000.0.32f1.pkg -target /
+          sudo installer -pkg Unity-6000.0.32f1.pkg -target / -verbose
       - name: Verify Unity Installation
         script: |
           ls /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity
