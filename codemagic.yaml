@@ -61,14 +61,26 @@ workflows:
       - name: Activate Unity License
         script: |
           echo "Activating Unity license..."
+          if [ ! -f ./Licenses/Unity_u.ulf ]; then
+            echo "License file (Unity_u.ulf) not found in ./Licenses/ directory."
+            exit 1
+          fi
+
           /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
           -manualLicenseFile ./Licenses/Unity_u.ulf \
           -logFile license_activation.log
+
           if [ $? -eq 0 ]; then
             echo "Unity license activated successfully."
           else
             echo "Unity license activation failed. Check license_activation.log for details."
+            if [ -f license_activation.log ]; then
+              echo "License activation log:"
+              cat license_activation.log
+            else
+              echo "License activation log file not found."
+            fi
             exit 1
           fi
 
