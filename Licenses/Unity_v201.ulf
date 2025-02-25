@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <license>
-  <version>6.x</version>
+  <version>1.0</version>
   <serial>SC-UQBY-WUU9-YHZU-2PJC-XXXX</serial>
-  <Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>SylhYA0NDGRMLy+pi1ch0Mk9K/c=</DigestValue></Reference></SignedInfo><SignatureValue>j5ugkyUnOwR0ncrUhRlZ/oSRn65aI2/BMFMigHUXk8Iv5N/ZLvhemgV1U5JxdDjtQfUVdOsfSJvD&#13;
+  <signature>j5ugkyUnOwR0ncrUhRlZ/oSRn65aI2/BMFMigHUXk8Iv5N/ZLvhemgV1U5JxdDjtQfUVdOsfSJvD&#13;
 HnC93pAORQks/gWwIjQVGgNTgUWceKplKjgJe5rgum5WLvl/cUOb7sNv5hiPW3xkIkWFlGcdQTy+&#13;
 ed7M6SnqPpvaSU1BtUNe6inlXudb8dnEGRp4gclE5axUj7V3sWidviFlJDzrbK+mO+lfYL+XqSUZ&#13;
 BiiQDL4cHgKRsvbgnwXh+jca1ByTOT6lEPW6/idIC9z2PrijPpjoW46SdKeDjHZOREamgNDd0q1G&#13;
-OobPuurowN1s2Bh9MudrpWIDyrYzq/JMfRCBKA==</SignatureValue></Signature>
+OobPuurowN1s2Bh9MudrpWIDyrYzq/JMfRCBKA==</signature>
 </license>
