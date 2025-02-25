@@ -39,10 +39,10 @@ workflows:
       - name: Verify Unity Installation
         script: |
           echo "Checking Unity installation path..."
-          ls -R /Applications/Unity/Hub/Editor/
+          find /Applications -name "Unity.app"
       - name: Build Unity project
         script: |
-          /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity \  # Update this path if Unity is installed elsewhere
           -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
           -projectPath . -logFile
       - name: Build Xcode project
