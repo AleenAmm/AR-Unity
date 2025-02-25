@@ -63,7 +63,7 @@ workflows:
           echo "Activating Unity license..."
           /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
-          -manualLicenseFile ./Licenses/Unity_lic.ulf \
+          -manualLicenseFile ./Licenses/Unity_u.ulf \
           -logFile license_activation.log
           if [ $? -eq 0 ]; then
             echo "Unity license activated successfully."
