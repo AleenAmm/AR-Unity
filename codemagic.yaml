@@ -6,6 +6,7 @@ workflows:
     environment:
       groups:
         - apple_credentials  # Store Apple Developer credentials in Codemagic
+        - installer  # Contains CM_UNITY_INSTALLER_URL
     triggering:
       events:
         - push
@@ -21,11 +22,11 @@ workflows:
 
       - name: Download Unity Installer
         script: |
-          FILE_ID="1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2"
+          FILE_URL="$CM_UNITY_INSTALLER_URL"
           FILE_NAME="Unity-6000.0.32f1.pkg"
 
-          # Download using gdown
-          gdown --id $FILE_ID -O $FILE_NAME
+          # Download the Unity installer
+          curl -L -o $FILE_NAME "$FILE_URL"
 
           # Verify the downloaded file
           if [ -f $FILE_NAME ]; then
@@ -39,12 +40,11 @@ workflows:
 
       - name: Install Unity
         script: |
-          FILE_NAME="Unity-6000.0.32f1.pkg"
+          FILE_NAME="UnityInstaller.pkg"
 
           if [ -f $FILE_NAME ]; then
             echo "Installing Unity..."
-            chmod +x $FILE_NAME  # Ensure it has execution permission
-            sudo installer -pkg $FILE_NAME -target / -verbose
+            sudo installer -pkg $FILE_NAME -target /
             if [ $? -eq 0 ]; then
               echo "Unity installed successfully."
             else
