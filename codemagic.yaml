@@ -21,7 +21,7 @@ workflows:
 
       - name: Download Unity Installer
         script: |
-          gdown "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2" -O Unity-6000.0.32f1.pkg
+          gdown "https://drive.google.com/file/d/1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2/view?usp=sharing" -O Unity-6000.0.32f1.pkg
 
       - name: Verify Unity Installer Download
         script: |
