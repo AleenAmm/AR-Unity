@@ -62,13 +62,19 @@ workflows:
         script: |
           echo "Activating Unity license..."
           if [ ! -f ./Licenses/Unity_v201.ulf ]; then
-            echo "License file (Unity_u.ulf) not found in ./Licenses/ directory."
+            echo "License file (Unity_v201.ulf) not found in ./Licenses/ directory."
+            exit 1
+          fi
+
+          echo "Verifying .ulf file format..."
+          if ! grep -q "<serial>" ./Licenses/Unity_v201.ulf || ! grep -q "<signature>" ./Licenses/Unity_v201.ulf; then
+            echo "Invalid .ulf file format. Ensure the file contains a valid serial number and signature."
             exit 1
           fi
 
           /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
-          -manualLicenseFile ./Licenses/Unity_u.ulf \
+          -manualLicenseFile ./Licenses/Unity_v201.ulf \
           -logFile license_activation.log
 
           if [ $? -eq 0 ]; then
