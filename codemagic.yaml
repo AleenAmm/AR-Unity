@@ -20,23 +20,23 @@ workflows:
           pip install gdown
 
       - name: Download Unity Installer
-  script: |
-    FILE_URL="https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
-    FILE_NAME="Unity-6000.0.32f1.pkg"
+        script: |
+          FILE_URL="https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
+          FILE_NAME="Unity-6000.0.32f1.pkg"
 
-    # Download the Unity installer using curl
-    echo "Downloading Unity installer from Dropbox..."
-    curl -L -o $FILE_NAME "$FILE_URL"
+          # Download the Unity installer using curl
+          echo "Downloading Unity installer from Dropbox..."
+          curl -L -o $FILE_NAME "$FILE_URL"
 
-    # Verify the downloaded file
-    if [ -f $FILE_NAME ]; then
-      echo "Unity installer downloaded successfully."
-      ls -lh $FILE_NAME  # Check file size
-      file $FILE_NAME  # Check file type
-    else
-      echo "Failed to download Unity installer."
-      exit 1
-    fi
+          # Verify the downloaded file
+          if [ -f $FILE_NAME ]; then
+            echo "Unity installer downloaded successfully."
+            ls -lh $FILE_NAME  # Check file size
+            file $FILE_NAME  # Check file type
+          else
+            echo "Failed to download Unity installer."
+            exit 1
+          fi
 
       - name: Install Unity
         script: |
