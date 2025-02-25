@@ -1,7 +1,7 @@
 workflows:
   unity-ios:
     name: Unity iOS Build
-    max_build_duration: 240  # Increased build duration
+    max_build_duration: 120  # Increased build duration
     instance_type: mac_mini_m1
     environment:
       groups:
