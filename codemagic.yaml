@@ -5,7 +5,6 @@ workflows:
     instance_type: mac_mini_m1
     environment:
       groups:
-        - apple_credentials  # Store Apple Developer credentials in Codemagic
         - installer  # Contains CM_UNITY_INSTALLER_URL
     triggering:
       events:
