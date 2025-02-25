@@ -1,7 +1,7 @@
 workflows:
   unity-ios:
     name: Unity iOS Build
-    max_build_duration: 120
+    max_build_duration: 240  # Increased build duration
     instance_type: mac_mini_m1
     environment:
       groups:
@@ -42,9 +42,18 @@ workflows:
           find /Applications -name "Unity.app"
       - name: Build Unity project
         script: |
-          /Applications/Unity/Unity.app/Contents/MacOS/Unity \  # Update this path if Unity is installed elsewhere
+          echo "Starting Unity build..."
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
-          -projectPath . -logFile
+          -projectPath . -logFile build.log
+          if [ $? -eq 0 ]; then
+            echo "Unity build succeeded."
+            cat build.log  # Print the build log for debugging
+          else
+            echo "Unity build failed. Check build.log for details."
+            cat build.log
+            exit 1
+          fi
       - name: Build Xcode project
         script: |
           mkdir -p $HOME/build  # Ensure the archive directory exists
