@@ -15,10 +15,6 @@ workflows:
           brew tap homebrew/cask
           brew install --cask unity-hub
 
-      - name: Install gdown
-        script: |
-          pip install gdown
-
       - name: Download Unity Installer
         script: |
           FILE_URL="https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
@@ -40,7 +36,7 @@ workflows:
 
       - name: Install Unity
         script: |
-          FILE_NAME="UnityInstaller.pkg"
+          FILE_NAME="Unity-6000.0.32f1.pkg"
 
           if [ -f $FILE_NAME ]; then
             echo "Installing Unity..."
