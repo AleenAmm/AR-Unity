@@ -33,9 +33,13 @@ workflows:
       - name: Install Unity
         script: |
           sudo installer -pkg Unity-6000.0.32f1.pkg -target / -verbose
+      - name: Check Installer Logs
+        script: |
+          cat /var/log/install.log | grep Unity
       - name: Verify Unity Installation
         script: |
-          ls /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity
+          echo "Checking Unity installation path..."
+          ls -R /Applications/Unity/Hub/Editor/
       - name: Build Unity project
         script: |
           /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
