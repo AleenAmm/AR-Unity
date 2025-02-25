@@ -34,12 +34,11 @@ workflows:
           # Clean up
           rm -f $COOKIE_FILE
 
-      - name: Verify Unity Installer Download
-        script: |
-          if [ -f Unity-6000.0.32f1.pkg ]; then
+          # Verify the downloaded file
+          if [ -f ${FILE_NAME} ]; then
             echo "Unity installer downloaded successfully."
-            ls -lh Unity-6000.0.32f1.pkg  # Check file size
-            file Unity-6000.0.32f1.pkg  # Check file type
+            ls -lh ${FILE_NAME}  # Check file size
+            file ${FILE_NAME}  # Check file type
           else
             echo "Failed to download Unity installer."
             exit 1
@@ -47,10 +46,17 @@ workflows:
 
       - name: Install Unity
         script: |
-          sudo installer -pkg Unity-6000.0.32f1.pkg -target / -verbose
+          if [ -f Unity-6000.0.32f1.pkg ]; then
+            echo "Installing Unity..."
+            sudo installer -pkg ./Unity-6000.0.32f1.pkg -target / -verbose
+          else
+            echo "Unity installer package not found."
+            exit 1
+          fi
 
       - name: Check Installer Logs
         script: |
+          echo "Checking installer logs..."
           cat /var/log/install.log | grep Unity
 
       - name: Verify Unity Installation
