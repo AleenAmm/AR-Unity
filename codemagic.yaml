@@ -58,47 +58,6 @@ workflows:
           echo "Checking Unity installation path..."
           find /Applications -name "Unity.app"
 
-      - name: Activate Unity License
-        script: |
-          echo "Activating Unity license..."
-          if [ ! -f ./Licenses/Unity_v201.ulf ]; then
-            echo "License file (Unity_v201.ulf) not found in ./Licenses/ directory."
-            exit 1
-          fi
-
-          echo "Verifying .ulf file format..."
-          if ! grep -q "<serial>" ./Licenses/Unity_v201.ulf || ! grep -q "<signature>" ./Licenses/Unity_v201.ulf; then
-            echo "Invalid .ulf file format. Ensure the file contains a valid serial number and signature."
-            exit 1
-          fi
-
-          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
-          -quit -batchmode -nographics \
-          -manualLicenseFile ./Licenses/Unity_v201.ulf \
-          -logFile license_activation.log
-
-          if [ $? -eq 0 ]; then
-            echo "Unity license activated successfully."
-          else
-            echo "Unity license activation failed. Check license_activation.log for details."
-            if [ -f license_activation.log ]; then
-              echo "License activation log:"
-              cat license_activation.log
-            else
-              echo "License activation log file not found."
-            fi
-            exit 1
-          fi
-
-      - name: Print License Activation Log
-        script: |
-          if [ -f license_activation.log ]; then
-            echo "License activation log:"
-            cat license_activation.log
-          else
-            echo "License activation log file not found."
-          fi
-
       - name: Build Unity project
         script: |
           echo "Starting Unity build..."
