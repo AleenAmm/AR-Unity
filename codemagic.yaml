@@ -49,6 +49,13 @@ workflows:
           if [ -f Unity-6000.0.32f1.pkg ]; then
             echo "Installing Unity..."
             sudo installer -pkg ./Unity-6000.0.32f1.pkg -target / -verbose
+            if [ $? -eq 0 ]; then
+              echo "Unity installed successfully."
+            else
+              echo "Unity installation failed. Check installer logs for details."
+              cat /var/log/install.log | grep Unity
+              exit 1
+            fi
           else
             echo "Unity installer package not found."
             exit 1
