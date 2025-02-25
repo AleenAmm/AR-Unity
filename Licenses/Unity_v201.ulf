@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><root>
+    <License id="Terms">
+        <MachineBindings>
+            <Binding Key="1" Value="00356-06280-43675-AAOEM"/>
+            <Binding Key="2" Value="10000_00_000000_00_0C83E8_0E_4309A2_74.B"/>
+            <Binding Key="4" Value="MEYwMjJUVTIyMzIwMUo="/>
+            <Binding Key="5" Value="e4:fd:45:8f:32:57"/>
+        </MachineBindings>
+        <MachineID Value="ochJZ2jJPHPr5/AUlwxWmYmmeks="/>
+        <SerialHash Value="12c4304aa8a032832f0565fb6dfd7259c43301f5"/>
+        <Features>
+            <Feature Value="33"/>
+            <Feature Value="12"/>
+            <Feature Value="34"/>
+            <Feature Value="13"/>
+            <Feature Value="24"/>
+            <Feature Value="25"/>
+            <Feature Value="36"/>
+            <Feature Value="17"/>
+            <Feature Value="18"/>
+            <Feature Value="19"/>
+            <Feature Value="0"/>
+            <Feature Value="1"/>
+            <Feature Value="2"/>
+            <Feature Value="3"/>
+            <Feature Value="4"/>
+            <Feature Value="60"/>
+            <Feature Value="40"/>
+            <Feature Value="63"/>
+            <Feature Value="20"/>
+            <Feature Value="21"/>
+        </Features>
+        <DeveloperData Value="AQAAAFNDLVVRQlktV1VVOS1ZSFpVLTJQSkMtQ1E1QQ=="/>
+        <SerialMasked Value="SC-UQBY-WUU9-YHZU-2PJC-XXXX"/>
+        <StartDate Value="2024-12-23T00:00:00"/>
+        <StopDate Value="2025-12-25T09:54:46"/>
+        <UpdateDate Value="2025-02-26T17:22:45"/>
+        <InitialActivationDate Value="2025-01-15T13:25:38"/>
+        <LicenseVersion Value="6.x"/>
+        <ClientProvidedVersion Value="2017.2.0"/>
+        <AlwaysOnline Value="false"/>
+        <Entitlements>
+            <Entitlement Ns="unity_editor" Tag="UnityPersonalPlus" Type="EDITOR" ValidTo="2025-12-23T09:54:46"/>
+            <Entitlement Ns="unity_editor" Tag="UnityPersonal" Type="EDITOR" ValidTo="9999-12-31T00:00:00"/>
+            <Entitlement Ns="unity_editor" Tag="DarkSkin" Type="EDITOR_FEATURE" ValidTo="9999-12-31T00:00:00"/>
+            <Entitlement Ns="unity_editor" Tag="UnityProStudent" Type="EDITOR_FEATURE" ValidTo="2025-12-23T09:54:46"/>
+        </Entitlements>
+    </License>
+<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>SylhYA0NDGRMLy+pi1ch0Mk9K/c=</DigestValue></Reference></SignedInfo><SignatureValue>j5ugkyUnOwR0ncrUhRlZ/oSRn65aI2/BMFMigHUXk8Iv5N/ZLvhemgV1U5JxdDjtQfUVdOsfSJvD&#13;
+HnC93pAORQks/gWwIjQVGgNTgUWceKplKjgJe5rgum5WLvl/cUOb7sNv5hiPW3xkIkWFlGcdQTy+&#13;
+ed7M6SnqPpvaSU1BtUNe6inlXudb8dnEGRp4gclE5axUj7V3sWidviFlJDzrbK+mO+lfYL+XqSUZ&#13;
+BiiQDL4cHgKRsvbgnwXh+jca1ByTOT6lEPW6/idIC9z2PrijPpjoW46SdKeDjHZOREamgNDd0q1G&#13;
+OobPuurowN1s2Bh9MudrpWIDyrYzq/JMfRCBKA==</SignatureValue></Signature></root>
