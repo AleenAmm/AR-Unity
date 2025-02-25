@@ -14,12 +14,15 @@ workflows:
         script: |
           brew tap homebrew/cask
           brew install --cask unity-hub
+
       - name: Install gdown
         script: |
           pip install gdown
+
       - name: Download Unity Installer
         script: |
           gdown "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2" -O Unity-6000.0.32f1.pkg
+
       - name: Verify Unity Installer Download
         script: |
           if [ -f Unity-6000.0.32f1.pkg ]; then
@@ -30,16 +33,34 @@ workflows:
             echo "Failed to download Unity installer."
             exit 1
           fi
+
       - name: Install Unity
         script: |
           sudo installer -pkg Unity-6000.0.32f1.pkg -target / -verbose
+
       - name: Check Installer Logs
         script: |
           cat /var/log/install.log | grep Unity
+
       - name: Verify Unity Installation
         script: |
           echo "Checking Unity installation path..."
           find /Applications -name "Unity.app"
+
+      - name: Activate Unity License
+        script: |
+          echo "Activating Unity license..."
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
+          -quit -batchmode -nographics \
+          -manualLicenseFile ./licenses/your-license-file.ulf \
+          -logFile license_activation.log
+          if [ $? -eq 0 ]; then
+            echo "Unity license activated successfully."
+          else
+            echo "Unity license activation failed. Check license_activation.log for details."
+            exit 1
+          fi
+
       - name: Build Unity project
         script: |
           echo "Starting Unity build..."
@@ -54,6 +75,7 @@ workflows:
             cat build.log
             exit 1
           fi
+
       - name: Build Xcode project
         script: |
           mkdir -p $HOME/build  # Ensure the archive directory exists
@@ -69,6 +91,7 @@ workflows:
             echo "Xcode build failed. Check xcodebuild.log for details."
             exit 1
           fi
+
       - name: Export .ipa File
         script: |
           xcodebuild -exportArchive \
