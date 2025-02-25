@@ -24,8 +24,8 @@ workflows:
           FILE_URL="$CM_UNITY_INSTALLER_URL"
           FILE_NAME="Unity-6000.0.32f1.pkg"
 
-          # Download the Unity installer
-          curl -L -o $FILE_NAME "$FILE_URL"
+          # Download the Unity installer using gdown
+          gdown -O $FILE_NAME "$FILE_URL"
 
           # Verify the downloaded file
           if [ -f $FILE_NAME ]; then
