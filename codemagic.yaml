@@ -61,7 +61,7 @@ workflows:
       - name: Activate Unity License
         script: |
           echo "Activating Unity license..."
-          if [ ! -f ./Licenses/Unity_u.ulf ]; then
+          if [ ! -f ./Licenses/Unity_v201.ulf ]; then
             echo "License file (Unity_u.ulf) not found in ./Licenses/ directory."
             exit 1
           fi
