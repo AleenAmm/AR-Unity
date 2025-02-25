@@ -52,7 +52,7 @@ workflows:
           echo "Activating Unity license..."
           /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
-          -manualLicenseFile ./Licenses/Unity_v2017.ulf\
+          -manualLicenseFile ./Licenses/Unity_v2017.ulf \
           -logFile license_activation.log
           if [ $? -eq 0 ]; then
             echo "Unity license activated successfully."
@@ -81,20 +81,3 @@ workflows:
           mkdir -p $HOME/build  # Ensure the archive directory exists
           echo "Building Xcode project..."
           xcodebuild -project Unity-iPhone.xcodeproj \
-          -scheme Unity-iPhone \
-          -sdk iphoneos \
-          -configuration Release \
-          archive -archivePath $HOME/build/YourGame.xcarchive | tee xcodebuild.log
-          if [ $? -eq 0 ]; then
-            echo "Xcode build succeeded."
-          else
-            echo "Xcode build failed. Check xcodebuild.log for details."
-            exit 1
-          fi
-
-      - name: Export .ipa File
-        script: |
-          xcodebuild -exportArchive \
-          -archivePath $HOME/build/YourGame.xcarchive \
-          -exportPath $HOME/build \
-          -exportOptionsPlist ExportOptions.plist
