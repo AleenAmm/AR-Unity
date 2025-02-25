@@ -16,11 +16,12 @@ workflows:
           brew install --cask unity-hub
       - name: Download Unity Installer
         script: |
-          curl -L -o Unity-6000.0.32f1.pkg "https://drive.google.com/file/d/1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2/view?usp=sharing"
+          curl -L -o Unity-6000.0.32f1.pkg "https://drive.google.com/uc?export=download&id=1aE3ZRPxFW7C-B9IeM4-tu4l96K-6w7B2"
       - name: Verify Unity Installer Download
         script: |
           if [ -f Unity-6000.0.32f1.pkg ]; then
             echo "Unity installer downloaded successfully."
+            ls -lh Unity-6000.0.32f1.pkg  # Check file size
           else
             echo "Failed to download Unity installer."
             exit 1
