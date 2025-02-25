@@ -36,24 +36,24 @@ workflows:
           /Applications/Unity/Hub/Editor/6000.0.32f1/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
           -projectPath . -logFile
-- name: Build Xcode project
-  script: |
-    mkdir -p $HOME/build  # Ensure the archive directory exists
-    echo "Building Xcode project..."
-    xcodebuild -project Unity-iPhone.xcodeproj \
-    -scheme Unity-iPhone \  # Use the default scheme name
-    -sdk iphoneos \
-    -configuration Release \
-    archive -archivePath $HOME/build/YourGame.xcarchive | tee xcodebuild.log
-    if [ $? -eq 0 ]; then
-      echo "Xcode build succeeded."
-    else
-      echo "Xcode build failed. Check xcodebuild.log for details."
-      exit 1
-    fi
-    - name: Export .ipa File
-  script: |
-    xcodebuild -exportArchive \
-    -archivePath $HOME/build/YourGame.xcarchive \
-    -exportPath $HOME/build \
-    -exportOptionsPlist ExportOptions.plist
+      - name: Build Xcode project
+        script: |
+          mkdir -p $HOME/build  # Ensure the archive directory exists
+          echo "Building Xcode project..."
+          xcodebuild -project Unity-iPhone.xcodeproj \
+          -scheme Unity-iPhone \
+          -sdk iphoneos \
+          -configuration Release \
+          archive -archivePath $HOME/build/YourGame.xcarchive | tee xcodebuild.log
+          if [ $? -eq 0 ]; then
+            echo "Xcode build succeeded."
+          else
+            echo "Xcode build failed. Check xcodebuild.log for details."
+            exit 1
+          fi
+      - name: Export .ipa File
+        script: |
+          xcodebuild -exportArchive \
+          -archivePath $HOME/build/YourGame.xcarchive \
+          -exportPath $HOME/build \
+          -exportOptionsPlist ExportOptions.plist
