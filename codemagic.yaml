@@ -3,8 +3,8 @@ workflows:
     name: Unity iOS Build
     environment:
       vars:
-        UNITY_VERSION: "6000.0.32f1"  # Change this to your Unity version
-        UNITY_DOWNLOAD_URL: "https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
+        UNITY_VERSION: "6000.0.32f1"  # ✅ Replace with your correct Unity version
+        UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/1c867a9/MacEditorInstaller/Unity.pkg"
     triggering:
       events:
         - push
@@ -12,23 +12,22 @@ workflows:
       - name: Download and Install Unity
         script: |
           echo "Downloading Unity..."
-          curl -o Unity.tar.xz $UNITY_DOWNLOAD_URL
-          echo "Extracting Unity..."
-          tar -xvf Unity.tar.xz -C /Applications/Unity
-          export PATH="/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS:$PATH"
+          curl -o Unity.pkg $UNITY_DOWNLOAD_URL
+          echo "Installing Unity..."
+          sudo installer -pkg Unity.pkg -target /
           echo "Unity installed successfully!"
 
       - name: Activate Unity License
         script: |
           echo "Activating Unity License..."
-          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH \
           -logFile license_activation.log || exit 1
 
       - name: Build Unity Project for iOS
         script: |
           echo "Starting Unity iOS Build..."
-          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
           -projectPath $CM_BUILD_DIR \
           -buildTarget iOS \
