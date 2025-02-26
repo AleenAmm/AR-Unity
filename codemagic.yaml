@@ -1,97 +1,40 @@
 workflows:
-  unity-ios:
+  unity_ios_build:
     name: Unity iOS Build
-    max_build_duration: 120
-    instance_type: mac_mini_m1
     environment:
       groups:
-        - installer  # Contains CM_UNITY_INSTALLER_URL
+        - unity_credentials # Store Unity credentials in Codemagic
+      vars:
+        UNITY_VERSION: "6000.0.32f1"  # Change this to your Unity version
+        UNITY_DOWNLOAD_URL: "https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
     triggering:
       events:
         - push
     scripts:
-      - name: Install Unity Hub
+      - name: Download and Install Unity
         script: |
-          brew tap homebrew/cask
-          brew install --cask unity-hub
+          echo "Downloading Unity..."
+          curl -o Unity.tar.xz $UNITY_DOWNLOAD_URL
+          echo "Extracting Unity..."
+          tar -xvf Unity.tar.xz -C /Applications/Unity
+          export PATH="/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS:$PATH"
+          echo "Unity installed successfully!"
 
-      - name: Download Unity Installer
+      - name: Activate Unity License
         script: |
-          FILE_URL="https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
-          FILE_NAME="Unity-6000.0.32f1.pkg"
+          echo "Activating Unity License..."
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH \
+          -logFile license_activation.log || exit 1
 
-          # Download the Unity installer using curl
-          echo "Downloading Unity installer from Dropbox..."
-          curl -L -o $FILE_NAME "$FILE_URL"
-
-          # Verify the downloaded file
-          if [ -f $FILE_NAME ]; then
-            echo "Unity installer downloaded successfully."
-            ls -lh $FILE_NAME  # Check file size
-            file $FILE_NAME  # Check file type
-          else
-            echo "Failed to download Unity installer."
-            exit 1
-          fi
-
-      - name: Install Unity
+      - name: Build Unity Project for iOS
         script: |
-          FILE_NAME="Unity-6000.0.32f1.pkg"
+          echo "Starting Unity iOS Build..."
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
+          -quit -batchmode -nographics \
+          -projectPath $CM_BUILD_DIR \
+          -buildTarget iOS \
+          -logFile build.log || exit 1
 
-          if [ -f $FILE_NAME ]; then
-            echo "Installing Unity..."
-            sudo installer -pkg $FILE_NAME -target /
-            if [ $? -eq 0 ]; then
-              echo "Unity installed successfully."
-            else
-              echo "Unity installation failed. Check installer logs for details."
-              tail -n 50 /var/log/install.log | grep Unity
-              exit 1
-            fi
-          else
-            echo "Unity installer package not found."
-            exit 1
-          fi
-
-      - name: Verify Unity Installation
-        script: |
-          echo "Checking Unity installation path..."
-          find /Applications -name "Unity.app"
-
-      - name: Build Unity project
-        script: |
-          echo "Starting Unity build..."
-          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
-          -quit -batchmode -nographics -executeMethod BuildScript.BuildiOS \
-          -projectPath . -logFile build.log
-          if [ $? -eq 0 ]; then
-            echo "Unity build succeeded."
-            cat build.log  # Print the build log for debugging
-          else
-            echo "Unity build failed. Check build.log for details."
-            cat build.log
-            exit 1
-          fi
-
-      - name: Build Xcode project
-        script: |
-          mkdir -p $HOME/build  # Ensure the archive directory exists
-          echo "Building Xcode project..."
-          xcodebuild -project Unity-iPhone.xcodeproj \
-          -scheme Unity-iPhone \
-          -sdk iphoneos \
-          -configuration Release \
-          archive -archivePath $HOME/build/YourGame.xcarchive | tee xcodebuild.log
-          if [ $? -eq 0 ]; then
-            echo "Xcode build succeeded."
-          else
-            echo "Xcode build failed. Check xcodebuild.log for details."
-            exit 1
-          fi
-
-      - name: Export .ipa File
-        script: |
-          xcodebuild -exportArchive \
-          -archivePath $HOME/build/YourGame.xcarchive \
-          -exportPath $HOME/build \
-          -exportOptionsPlist ExportOptions.plist
+    artifacts:
+      - "build/iOS/**"
