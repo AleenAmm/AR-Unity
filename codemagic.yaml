@@ -5,7 +5,7 @@ workflows:
       vars:
         UNITY_VERSION: "6000.0.32f1"  # ✅ Replace with your actual Unity version
         UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/1c867a9/MacEditorInstaller/Unity.pkg"
-        UNITY_LICENSE_PATH: "$CM_BUILD_DIR/Licenses/Unity_v201.ulf"  # ✅ Correct path to license file
+        UNITY_LICENSE_PATH: "$CM_BUILD_DIR/Licenses/Unity_lic.ulf"  # ✅ Correct path to license file
     triggering:
       events:
         - push
