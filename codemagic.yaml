@@ -55,8 +55,6 @@ workflows:
           $UNITY_PATH -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH -logFile license_activation.log || exit 1
           echo "✅ Unity License Activated"
 
-
-
       - name: Build Unity Project for iOS
         script: |
           echo "Starting Unity iOS Build..."
