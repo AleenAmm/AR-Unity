@@ -3,8 +3,9 @@ workflows:
     name: Unity iOS Build
     environment:
       vars:
-        UNITY_VERSION: "6000.0.32f1"  # ✅ Replace with your correct Unity version
-        UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/b2e806cf271c/MacEditorInstaller/Unity-6000.0.32f1.pkg"
+        UNITY_VERSION: "6000.0.32f1"  # ✅ Replace with your actual Unity version
+        UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/1c867a9/MacEditorInstaller/Unity.pkg"
+        UNITY_LICENSE_PATH: "$CM_BUILD_DIR/Licenses/Unity_v201.ulf"  # ✅ Correct path to license file
     triggering:
       events:
         - push
@@ -16,22 +17,34 @@ workflows:
           echo "Installing Unity..."
           sudo installer -pkg Unity.pkg -target /
           echo "Unity installed successfully!"
+          export PATH="/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS:$PATH"
+
+      - name: Copy License File
+        script: |
+          echo "Copying Unity license file..."
+          if [ ! -f "$UNITY_LICENSE_PATH" ]; then
+            echo "❌ License file not found in repository! Make sure it's in 'Licenses/Unity_v201.ulf'."
+            exit 1
+          fi
+          echo "✅ License file found and ready."
 
       - name: Activate Unity License
         script: |
           echo "Activating Unity License..."
-          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
           -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH \
           -logFile license_activation.log || exit 1
+          echo "✅ Unity License Activated"
 
       - name: Build Unity Project for iOS
         script: |
           echo "Starting Unity iOS Build..."
-          /Applications/Unity/Unity.app/Contents/MacOS/Unity \
+          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
           -quit -batchmode -nographics \
           -projectPath $CM_BUILD_DIR \
           -buildTarget iOS \
           -logFile build.log || exit 1
+          echo "✅ Unity iOS Build Completed"
 
     artifacts:
       - "build/iOS/**"
