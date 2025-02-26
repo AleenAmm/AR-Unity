@@ -2,8 +2,6 @@ workflows:
   unity_ios_build:
     name: Unity iOS Build
     environment:
-      groups:
-        - unity_credentials # Store Unity credentials in Codemagic
       vars:
         UNITY_VERSION: "6000.0.32f1"  # Change this to your Unity version
         UNITY_DOWNLOAD_URL: "https://www.dropbox.com/scl/fi/vz995d6tzxkyji1nx29av/Unity-6000.0.32f1.pkg?rlkey=bei8gt4si7cxyqk1raejk02w2&st=wje1jdw9&dl=1"
