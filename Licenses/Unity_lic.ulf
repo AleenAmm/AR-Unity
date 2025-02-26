@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><root>
+<?xml version="1.0" encoding="UTF-8"?><root><TimeStamp Value="Ub6yUZ+nzrrGrQ=="/>
     <License id="Terms">
         <MachineBindings>
             <Binding Key="1" Value="00356-06280-43675-AAOEM"/>
@@ -34,10 +34,10 @@
         <SerialMasked Value="SC-UQBY-WUU9-YHZU-2PJC-XXXX"/>
         <StartDate Value="2024-12-23T00:00:00"/>
         <StopDate Value="2025-12-25T09:54:46"/>
-        <UpdateDate Value="2025-02-26T09:48:50"/>
+        <UpdateDate Value="2025-02-27T09:23:12"/>
         <InitialActivationDate Value="2025-01-15T13:25:38"/>
         <LicenseVersion Value="6.x"/>
-        <ClientProvidedVersion Value="2017.2.0"/>
+        <ClientProvidedVersion Value="6000.0.32"/>
         <AlwaysOnline Value="false"/>
         <Entitlements>
             <Entitlement Ns="unity_editor" Tag="UnityPersonalPlus" Type="EDITOR" ValidTo="2025-12-23T09:54:46"/>
@@ -45,9 +45,8 @@
             <Entitlement Ns="unity_editor" Tag="DarkSkin" Type="EDITOR_FEATURE" ValidTo="9999-12-31T00:00:00"/>
             <Entitlement Ns="unity_editor" Tag="UnityProStudent" Type="EDITOR_FEATURE" ValidTo="2025-12-23T09:54:46"/>
         </Entitlements>
-    </License>
-<Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>FDTZcC9Jcy6pDn6XtgyuKdcI0cM=</DigestValue></Reference></SignedInfo><SignatureValue>h05Uhx70Du+aQxVS73MTIOA/JG9axYYK3Kb5hJT6X+iHv/KJ3W52lPtW83sq6E5f57R/hazXMGfy&#13;
-6mp/KxiD8WSu1LcUiuLcCpLQ4yJGDPWxWXl3T2JsAw5PJUY+wE3G3g1Z/SqeapH3IAnvFGvl7yyb&#13;
-2tzXK6+MZ0XQ69ykZ13FBDs9p1pV/lC1/4iv2w1VIn8h4Q2x4jHKBMIY5+xFvfCXU8SQLNTpaT1J&#13;
-2JNslYH23LIK7SwM4durMb3bupPq7jL+5/apaWCMJFWbyeMY9L14qHHtBmM0SxDzC+6X8goTLyZ9&#13;
-daqoiG4HfzT5g2oPjG5CW8IpCAd2sCcZvKj5Ag==</SignatureValue></Signature></root>
+    </License><Signature xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315#WithComments"/><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/><Reference URI="#Terms"><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/><DigestValue>jFSNBBeA/OlIr2Hpx6ieYHRqPnA=</DigestValue></Reference></SignedInfo><SignatureValue>XH12MofYupdI55GEpk+qclqMDidwFxqGSG1viwAdfA65VdK5IrBqYd/koCA1amMTu4Vqizjm0Gf4
+zl0kPmTmMdAk1jfcEvcMMGSh1UXkpThaumkpaseQLAA4JN5i/JPfkT6xQ/OX3DYD5EPXfTvdpqsL
+nmFi3Hsx1NsgurN6H2otFxH2CPyFoUCw3euZdwi/9avfw9Lx37amGxED0iqMos00TPqKx7PXE0VU
+OHIMNwLPpjhQDXC8sdEwhNp/3wUx/eYw31q9t/gRX+orNLs1owUPd2tas+SnKStWdrawjkYk4bzA
+S11HtKMRmKFhCfeOBL5NddBVOaa4GnjenJg2Bg==</SignatureValue></Signature></root>
