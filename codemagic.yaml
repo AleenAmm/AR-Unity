@@ -32,15 +32,30 @@ workflows:
 
       - name: Activate Unity License
         script: |
+          #!/usr/bin/env bash
+
           echo "Activating Unity License..."
+
+          # Check if the license file exists
           if [ ! -f "$UNITY_LICENSE_PATH" ]; then
             echo "❌ License file missing, skipping activation!"
             exit 1
           fi
-          /Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity \
-          -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH \
-          -logFile license_activation.log || exit 1
+
+          # Ensure the Unity version is set correctly
+          UNITY_PATH="/Applications/Unity/Hub/Editor/$UNITY_VERSION/Unity.app/Contents/MacOS/Unity"
+
+          # Check if the Unity executable exists
+          if [ ! -f "$UNITY_PATH" ]; then
+            echo "❌ Unity executable not found at $UNITY_PATH! Please verify Unity is installed correctly."
+            exit 1
+          fi
+
+          # Activate the Unity license
+          $UNITY_PATH -batchmode -nographics -manualLicenseFile $UNITY_LICENSE_PATH -logFile license_activation.log || exit 1
           echo "✅ Unity License Activated"
+
+
 
       - name: Build Unity Project for iOS
         script: |
