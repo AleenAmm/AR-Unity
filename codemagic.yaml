@@ -4,7 +4,7 @@ workflows:
     environment:
       vars:
         UNITY_VERSION: "6000.0.32f1"  # ✅ Replace with your correct Unity version
-        UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/1c867a9/MacEditorInstaller/Unity.pkg"
+        UNITY_DOWNLOAD_URL: "https://download.unity3d.com/download_unity/b2e806cf271c/MacEditorInstaller/Unity-6000.0.32f1.pkg"
     triggering:
       events:
         - push
